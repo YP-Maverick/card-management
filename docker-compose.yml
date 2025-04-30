@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  task-db:
+    container_name: task-db
+    image: postgres:16-alpine
+    ports:
+      - 6540:5432
+    environment:
+      - POSTGRES_DB=task-main
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  cm-app:
+    container_name: cm-app
+    image: task-management-service:0.0.1-SNAPSHOT
+    build: .
+    ports:
+      - 9090:9090
+    environment:
+      - SERVER_PORT=9090
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://task-db:5432/task-main
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - task-db
+    volumes:
+      - ./src:/app/src
+
+volumes:
+  pgdata: {}
