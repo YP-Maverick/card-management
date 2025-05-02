@@ -15,6 +15,7 @@ import ru.maverick.cardmanagementsystem.card.repository.CardRepository;
 import ru.maverick.cardmanagementsystem.card.request.CardCreateRequest;
 import ru.maverick.cardmanagementsystem.exception.AuthenticationException;
 import ru.maverick.cardmanagementsystem.exception.CardExpiredException;
+import ru.maverick.cardmanagementsystem.exception.InsufficientFundsException;
 import ru.maverick.cardmanagementsystem.exception.NotFoundException;
 import ru.maverick.cardmanagementsystem.user.model.User;
 import ru.maverick.cardmanagementsystem.user.service.UserService;
@@ -139,9 +140,15 @@ public class CardServiceImpl implements CardService {
                         encryptor.encrypt(toRawNumber))
                 .orElseThrow(() -> new NotFoundException("Destination card not found"));
 
-
         validateCard(from, requester);
         validateCard(to, requester);
+
+        if (from.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) < 0) {
+            throw new InsufficientFundsException(
+                    String.format("Insufficient funds on card with lastDigits: %s, amount: %s",
+                            from.getLastFourDigits(), amount)
+            );
+        }
 
         from.setBalance(from.getBalance().subtract(amount));
         to.setBalance(to.getBalance().add(amount));

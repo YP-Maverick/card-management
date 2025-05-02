@@ -46,7 +46,9 @@ public class ExceptionsHandler {
             MissingServletRequestParameterException.class,
             MethodArgumentNotValidException.class,
             MethodArgumentTypeMismatchException.class,
-            CardExpiredException.class})
+            CardExpiredException.class,
+            InsufficientFundsException.class
+    })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleValid(final Exception e) {
         log(e);
@@ -64,7 +66,8 @@ public class ExceptionsHandler {
             AuthenticationException.class,
             InvalidTokenException.class,
             InvalidTokenFormatException.class,
-            TokenExpiredException.class})
+            TokenExpiredException.class
+    })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public Map<String, String> handleAuthExceptions(final RuntimeException e) {
         log(e);
