@@ -8,7 +8,6 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
-import io.swagger.v3.oas.models.tags.Tag;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,13 +19,6 @@ import java.util.Map;
 
 @Configuration
 public class OpenApiConfig {
-
-    private static final List<Tag> TAGS = List.of(
-            new Tag().name("Auth").description("Аутентификация и управление токенами"),
-            new Tag().name("Cards").description("Управление банковскими картами"),
-            new Tag().name("Users").description("Управление пользователями"),
-            new Tag().name("BlockRequests").description("Запросы на блокировку карт")
-    );
 
     @Bean
     public OpenAPI customOpenAPI() {
