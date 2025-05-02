@@ -1,8 +1,8 @@
 package ru.maverick.cardmanagementsystem.card.request;
 
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
 import lombok.Value;
 
@@ -14,15 +14,12 @@ import java.time.LocalDate;
 @Builder
 public class CardCreateRequest {
 
-    // TODO Генерация cardNumber
-    @NotBlank
-    String cardNumber;
-
     @Future
     LocalDate expirationDate;
 
     @NotNull
-    Long userId;
+    Integer userId;
 
+    @PositiveOrZero
     BigDecimal balance;
 }

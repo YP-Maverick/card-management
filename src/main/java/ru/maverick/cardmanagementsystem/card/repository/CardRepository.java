@@ -38,4 +38,6 @@ public interface CardRepository extends JpaRepository<Card, UUID> {
            "FROM Card c " +
            "WHERE c.encryptedCardNumber = :encryptedNumber")
     Optional<Card> findByEncryptedCardNumber(@Param("encryptedNumber") String encryptedNumber);
+
+    boolean existsByEncryptedCardNumber(String encryptedNumber);
 }

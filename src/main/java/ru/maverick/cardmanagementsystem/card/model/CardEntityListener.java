@@ -4,7 +4,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.maverick.cardmanagementsystem.encript.service.EncryptionService;
+import ru.maverick.cardmanagementsystem.utils.crypt.Encryptor;
 
 import java.time.Instant;
 
@@ -23,7 +23,7 @@ public class CardEntityListener {
      * </ul>
      */
 
-    private final EncryptionService encryptionService;
+    private final Encryptor encryptionService;
 
     @PrePersist
     public void prePersist(Card card) {

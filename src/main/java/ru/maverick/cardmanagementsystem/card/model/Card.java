@@ -10,7 +10,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
-
 @Getter
 @Setter
 @Builder(builderClassName = "CardBuilder", access = AccessLevel.PUBLIC)
@@ -19,7 +18,14 @@ import java.util.UUID;
 @ToString(exclude = {"encryptedCardNumber", "lastFourDigits"})
 @Entity
 @EntityListeners(CardEntityListener.class)
-@Table(name = "cards")
+@Table(
+        name = "cards",
+        indexes = @Index(
+                name = "idx_cards_encrypted_number",
+                columnList = "encryptedCardNumber",
+                unique = true
+        )
+)
 public class Card {
 
     /**
@@ -28,7 +34,7 @@ public class Card {
      * Содержит зашифрованный номер карты и последние 4 цифры для отображения.
      * Шифрование и генерация полей выполняются через {@link CardEntityListener}.
      * <p>
-     * Создать можно только через Builder
+     * Создать извне можно только через Builder
      */
 
     @Id
@@ -53,7 +59,7 @@ public class Card {
     @Column(nullable = false)
     private BigDecimal balance;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
 
