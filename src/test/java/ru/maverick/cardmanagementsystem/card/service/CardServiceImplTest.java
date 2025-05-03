@@ -218,7 +218,7 @@ class CardServiceImplTest {
 
         @BeforeEach
         void setup() {
-            // Arrange - общие данные для тестов перевода
+            // Arrange
             fromCard = Card.builder()
                     .balance(BigDecimal.valueOf(500))
                     .owner(testUser)
